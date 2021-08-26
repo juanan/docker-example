@@ -35,5 +35,5 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: Docker Build
       run: |
-        docker build -t ${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webApplication1:${{ github.sha }} .
-        docker push ${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webApplication1:${{ github.sha }} 
+        docker build -f WebApplication1/Dockerfile -t ${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webapplication1:${{ github.sha }} .
+        docker push ${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webapplication1:${{ github.sha }} 
