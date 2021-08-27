@@ -25,7 +25,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore --configuration Release
-    - name: Docker Login
+    - name: Login into Azure Container Registry
       uses: docker/login-action@v1.10.0
       with:
         # Server address of Docker registry. If not set then will default to Docker Hub
@@ -34,15 +34,15 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         # Password or personal access token used to log against the Docker registry
         password: ${{ secrets.REGISTRY_PASSWORD }}
-    - name: Docker Build
+    - name: Build docker image
       run: |
         docker build -f WebApplication1/Dockerfile -t ${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webapplication1:${{ github.sha }} .
         docker push ${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webapplication1:${{ github.sha }} 
-    - name: Azure Login
+    - name: Login into Azure WebApp
       uses: Azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - name: Azure WebApp Deploy
+    - name: Deploy docker image to WebApp
       uses: Azure/webapps-deploy@v2
       with:
         app-name: 'ibisticfirstdockerexample'
