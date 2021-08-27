@@ -5,6 +5,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -37,3 +38,15 @@ jobs:
       run: |
         docker build -f WebApplication1/Dockerfile -t ${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webapplication1:${{ github.sha }} .
         docker push ${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webapplication1:${{ github.sha }} 
+    - name: Azure Login
+      uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Azure WebApp Deploy
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: 'ibisticfirstdockerexample'
+        images: '${{ secrets.REGISTRY_SERVERNAME }}.azurecr.io/webapplication1:${{ github.sha }}'
+    - name: Azure logout
+      run: az logout
+
