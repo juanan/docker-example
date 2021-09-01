@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace WebApplication1.Pages
@@ -25,7 +20,7 @@ namespace WebApplication1.Pages
         {
             using (var cn = new SqlConnection("Server=tcp:ibisticdockerexample.database.windows.net,1433;Initial Catalog=docker;Persist Security Info=False;User ID=docker;Password=Mercell0;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
             {
-                using (var cmd = new SqlCommand() { Connection = cn, CommandText = "select @@VERSION" })
+                using (var cmd = new SqlCommand() { Connection = cn, CommandText = "SELECT @@VERSION" })
                 {
                     try
                     {
